@@ -91,31 +91,31 @@
         <div class="form-row">
           <div class="field">
             <label class="field-label" for="f-nome">Nome <span class="req" aria-hidden="true">*</span></label>
-            <input class="input" id="f-nome" name="nome" type="text" autocomplete="name" required aria-describedby="err-nome">
+            <input class="input" id="f-nome" name="nome" maxlength="120" type="text" autocomplete="name" required aria-describedby="err-nome">
             <span class="field-error" id="err-nome" aria-live="polite"></span>
           </div>
           <div class="field">
             <label class="field-label" for="f-empresa">Empresa <span class="req" aria-hidden="true">*</span></label>
-            <input class="input" id="f-empresa" name="empresa" type="text" autocomplete="organization" required aria-describedby="err-empresa">
+            <input class="input" id="f-empresa" name="empresa" maxlength="160" type="text" autocomplete="organization" required aria-describedby="err-empresa">
             <span class="field-error" id="err-empresa" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label class="field-label" for="f-email">E-mail corporativo <span class="req" aria-hidden="true">*</span></label>
-            <input class="input" id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="err-email">
+            <input class="input" id="f-email" name="email" maxlength="254" type="email" autocomplete="email" required aria-describedby="err-email">
             <span class="field-error" id="err-email" aria-live="polite"></span>
           </div>
           <div class="field">
             <label class="field-label" for="f-telefone">Telefone ou WhatsApp <span class="req" aria-hidden="true">*</span></label>
-            <input class="input" id="f-telefone" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(22) 99999-9999" required aria-describedby="err-telefone">
+            <input class="input" id="f-telefone" name="telefone" maxlength="30" type="tel" autocomplete="tel" inputmode="tel" placeholder="(22) 99999-9999" required aria-describedby="err-telefone">
             <span class="field-error" id="err-telefone" aria-live="polite"></span>
           </div>
         </div>
         <div class="form-row">
           <div class="field">
             <label class="field-label" for="f-cargo">Cargo</label>
-            <input class="input" id="f-cargo" name="cargo" type="text" autocomplete="organization-title">
+            <input class="input" id="f-cargo" name="cargo" maxlength="120" type="text" autocomplete="organization-title">
           </div>
           <div class="field">
             <label class="field-label" for="f-interesse">Principal interesse</label>
@@ -133,7 +133,7 @@
         </div>
         <div class="field">
           <label class="field-label" for="f-mensagem">Quais processos você gostaria de automatizar?</label>
-          <textarea class="textarea" id="f-mensagem" name="mensagem" placeholder="Ex.: conciliamos 6 contas bancárias manualmente todos os dias no Excel."></textarea>
+          <textarea class="textarea" id="f-mensagem" name="mensagem" maxlength="5000" placeholder="Ex.: conciliamos 6 contas bancárias manualmente todos os dias no Excel."></textarea>
         </div>
         <div>
           <div class="check">
@@ -205,6 +205,7 @@
     </div>
   </div>
 </footer>
-<script src="js/main.js" defer></script>
+<script src="js/main.js?v=leads-20261107" defer></script>
 </body>
 </html>
+

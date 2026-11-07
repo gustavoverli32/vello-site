@@ -5,7 +5,7 @@ const VELLO_CONFIG = {
   contactEmail: "",      // ex.: "contato@vellosolutions.com.br" — vazio esconde os links de e-mail
   whatsappNumber: "",    // ex.: "5522999999999" — vazio desativa os links de WhatsApp
   linkedinUrl: "",
-  formEndpoint: "",      // ex.: endpoint do Formspree / Web3Forms que recebe o formulário
+  formEndpoint: "https://qjdvrqlcblkynheitkuk.supabase.co/functions/v1/vello-leads/intake",
   webhookUrl: "",        // opcional: n8n / Make / Zapier
   analyticsId: "",       // opcional: só com isso preenchido o aviso de cookies aparece
 };
@@ -298,6 +298,8 @@ function initForm() {
   const success = document.getElementById("form-success");
   const fallback = document.getElementById("form-fallback");
   const submitBtn = form.querySelector("[type='submit']");
+  let submissionId = crypto.randomUUID();
+  let sending = false;
   const clean = (v) => String(v || "").replace(/[<>]/g, "").trim();
 
   const setError = (name, msg) => {
@@ -330,47 +332,42 @@ function initForm() {
     if (el) { el.hidden = false; el.focus({ preventScroll: true }); el.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "center" }); }
   };
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (sending) return;
     if (form.elements.hp_check && form.elements.hp_check.value) return; // bot
     const errors = validate();
     const first = Object.keys(errors)[0];
     if (first) { form.elements[first].focus(); return; }
     if (Date.now() - startedAt < 2500) return;
 
-    const data = new FormData(form);
-    data.delete("hp_check");
-    data.append("origem", "site_contato");
-    track("submit_contact_form");
-
-    if (VELLO_CONFIG.webhookUrl) fetch(VELLO_CONFIG.webhookUrl, { method: "POST", body: data }).catch(() => {});
-
-    if (VELLO_CONFIG.formEndpoint) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Enviando…";
-      fetch(VELLO_CONFIG.formEndpoint, { method: "POST", headers: { Accept: "application/json" }, body: data })
-        .then((r) => { if (!r.ok) throw new Error(r.status); show(success); })
-        .catch(() => {
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Solicitar diagnóstico";
-          setError("consent", "Não foi possível enviar agora. Tente novamente em instantes.");
-        });
-      return;
+    const data = Object.fromEntries(new FormData(form));
+    data.submission_id = submissionId;
+    data.consent = form.elements.consent.checked;
+    const params = new URLSearchParams(location.search);
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(key => { if(params.has(key)) data[key] = params.get(key); });
+    sending = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando…";
+    setError("consent", "");
+    try {
+      const response = await fetch(VELLO_CONFIG.formEndpoint, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data),signal:AbortSignal.timeout(20000)});
+      const result = await response.json();
+      if (!response.ok || !result.ok) {
+        if (result.fields) Object.entries(result.fields).forEach(([name,message]) => setError(name,message));
+        throw new Error(result.error || "Não foi possível enviar agora. Tente novamente em instantes.");
+      }
+      track("submit_contact_form");
+      form.reset();
+      submissionId = crypto.randomUUID();
+      show(success);
+    } catch (error) {
+      setError("consent", error.name === "TimeoutError" || error.name === "TypeError" ? "Não foi possível confirmar o envio. Seus dados continuam preenchidos; tente novamente." : error.message);
+    } finally {
+      sending = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Solicitar diagnóstico";
     }
-
-    // Sem endpoint configurado: encaminha pelo WhatsApp ou e-mail, se existirem.
-    const resumo = `Olá, Vello Solutions. Sou ${clean(data.get("nome"))}, da ${clean(data.get("empresa"))}. ` +
-      `Gostaria de um diagnóstico${data.get("interesse") ? " sobre " + clean(data.get("interesse")) : ""}. ` +
-      `Contato: ${clean(data.get("email"))} / ${clean(data.get("telefone"))}.` +
-      (clean(data.get("mensagem")) ? ` Detalhes: ${clean(data.get("mensagem"))}` : "");
-    const wa = waLink(resumo);
-    const action = fallback && fallback.querySelector("[data-fallback-action]");
-    if (action && wa) { action.href = wa; action.hidden = false; action.textContent = "Enviar pelo WhatsApp"; }
-    else if (action && VELLO_CONFIG.contactEmail) {
-      action.href = `mailto:${VELLO_CONFIG.contactEmail}?subject=${encodeURIComponent("Diagnóstico — " + clean(data.get("empresa")))}&body=${encodeURIComponent(resumo)}`;
-      action.hidden = false; action.textContent = "Enviar por e-mail";
-    }
-    show(fallback);
   });
 }
 
@@ -418,3 +415,4 @@ function initCookies() {
   });
   document.body.appendChild(banner);
 }
+
