@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <title>Leads privados · VELLO</title><link rel="stylesheet" href="leads.css">
+</head>
+<body>
+ <a class="skip" href="#main">Pular para o conteúdo</a>
+ <header class="app-header"><a class="brand" href="/">V<span>ELLO</span><small>ÁREA INTERNA</small></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a class="active" href="./" aria-current="page">Leads <span class="private-label">Privado</span></a><a href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
+ <main id="main">
+  <section id="auth" class="auth-shell">
+   <div class="auth-copy"><span class="eyebrow">COMERCIAL / ACESSO PRIVADO</span><h1>O próximo projeto<br>começa aqui.</h1><p>Solicitações do site, conversas e propostas em um só lugar. Entre para acompanhar cada oportunidade.</p><div class="auth-flow"><span>Solicitação</span><b>→</b><span>Diagnóstico</span><b>→</b><span>Projeto</span></div></div>
+   <div class="auth-card"><div class="lock-icon" aria-hidden="true">⌑</div><h2>Entrar na área de leads</h2><p>Acesse com seu e-mail e sua senha.</p><form id="login-form"><label for="login-email">E-mail</label><input id="login-email" type="email" autocomplete="username" required placeholder="Seu e-mail de acesso"><label for="login-password">Senha</label><input id="login-password" type="password" autocomplete="current-password" required placeholder="Sua senha"><button class="button primary full" type="submit">Entrar <span>→</span></button></form><p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p><p class="auth-foot">Os dados de contato ficam disponíveis apenas para o responsável autorizado.</p></div>
+  </section>
+  <section id="workspace" hidden>
+   <div class="page-heading"><div><span class="eyebrow">COMERCIAL / DIAGNÓSTICOS</span><h1>Seu próximo projeto.</h1><p>Do primeiro contato à proposta. Acompanhe cada oportunidade.</p></div><div class="heading-actions"><span class="privacy-chip"><i></i> Área privada</span><button id="refresh" class="button">↻ Atualizar</button></div></div>
+   <div class="stats" aria-label="Resumo de oportunidades"><article><span>Oportunidades</span><strong id="stat-total">—</strong><small>solicitações recebidas</small></article><article><span>Novos contatos</span><strong id="stat-new">—</strong><small>aguardando atendimento</small></article><article><span>Em atendimento</span><strong id="stat-progress">—</strong><small>conversa, diagnóstico e proposta</small></article><article><span>Projetos fechados</span><strong id="stat-won">—</strong><small>oportunidades convertidas</small></article></div>
+   <div class="toolbar"><div><h2>Fluxo de atendimento <span id="lead-count">0</span></h2><p>Arraste os cards para mudar a etapa ou abra os detalhes.</p></div><div class="filters"><label class="sr-only" for="search">Buscar leads</label><input id="search" type="search" placeholder="Buscar empresa, nome ou contato"><label class="sr-only" for="status-filter">Filtrar etapa</label><select id="status-filter"><option value="">Todas as etapas</option><option value="novo">Novo lead</option><option value="contato">Em contato</option><option value="diagnostico">Diagnóstico agendado</option><option value="proposta">Proposta</option><option value="fechado">Fechado</option><option value="perdido">Perdido</option></select></div></div>
+   <p id="board-feedback" class="feedback" role="status" aria-live="polite"></p>
+   <div id="board" class="board" aria-label="Funil de leads" aria-busy="true"></div>
+   <p class="updated" id="last-updated"></p>
+  </section>
+ </main>
+ <dialog id="lead-dialog" class="lead-dialog" aria-labelledby="detail-company"><div class="drawer-heading"><span class="eyebrow">SOLICITAÇÃO DE DIAGNÓSTICO</span><button id="close-detail" class="close" aria-label="Fechar detalhes">×</button></div><div id="detail-content"></div></dialog>
+ <script type="module" src="leads.js"></script>
+</body>
+</html>

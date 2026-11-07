@@ -7,7 +7,7 @@ const VELLO_CONFIG = {
   linkedinUrl: "",
   formEndpoint: "https://qjdvrqlcblkynheitkuk.supabase.co/functions/v1/vello-leads/intake",
   webhookUrl: "",        // opcional: n8n / Make / Zapier
-  analyticsId: "",       // opcional: só com isso preenchido o aviso de cookies aparece
+  analyticsId: "vello-first-party",       // opcional: só com isso preenchido o aviso de cookies aparece
 };
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -17,8 +17,7 @@ function track(eventName, data = {}) {
   let consent = null;
   try { consent = localStorage.getItem("vello_cookie_consent"); } catch (e) { /* storage indisponível */ }
   if (consent !== "accepted") return;
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: eventName, ...data });
+  if (eventName === "submit_contact_form") window.dispatchEvent(new Event("vello:conversion"));
 }
 
 function waLink(message) {
@@ -394,25 +393,5 @@ function initContactLinks() {
 /* Aviso de cookies (só existe se houver ferramenta de análise)           */
 /* ---------------------------------------------------------------------- */
 function initCookies() {
-  if (!VELLO_CONFIG.analyticsId) return;
-  let stored = null;
-  try { stored = localStorage.getItem("vello_cookie_consent"); } catch (e) { return; }
-  if (stored) return;
-  const banner = document.createElement("div");
-  banner.className = "cookie-banner";
-  banner.setAttribute("role", "region");
-  banner.setAttribute("aria-label", "Aviso de cookies");
-  banner.innerHTML =
-    '<p><strong>Privacidade e cookies.</strong> Usamos cookies de análise para entender como o site é utilizado. ' +
-    'Saiba mais na <a href="politica-de-privacidade.html">Política de Privacidade</a>.</p>' +
-    '<div class="cookie-actions"><button class="btn btn-primary" data-c="accepted">Aceitar</button>' +
-    '<button class="btn btn-secondary" data-c="essential_only">Apenas essenciais</button></div>';
-  banner.addEventListener("click", (e) => {
-    const b = e.target.closest("[data-c]");
-    if (!b) return;
-    try { localStorage.setItem("vello_cookie_consent", b.dataset.c); } catch (err) { /* ignora */ }
-    banner.remove();
-  });
-  document.body.appendChild(banner);
+  import('./analytics.js?v=20261107').catch(() => {});
 }
-

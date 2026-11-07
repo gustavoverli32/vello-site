@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <title>Movimentação do site · VELLO</title><link rel="stylesheet" href="leads.css"><link rel="stylesheet" href="analytics.css">
+</head>
+<body>
+ <a class="skip" href="#main">Pular para o conteúdo</a>
+ <header class="app-header"><a class="brand" href="/">V<span>ELLO</span><small>ÁREA INTERNA</small></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a href="./">Leads <span class="private-label">Privado</span></a><a class="active" aria-current="page" href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
+ <main id="main">
+  <section id="auth" class="auth-shell">
+   <div class="auth-copy"><span class="eyebrow">COMERCIAL / ACESSO PRIVADO</span><h1>O próximo projeto<br>começa aqui.</h1><p>Acompanhe as visitas ao site e suas oportunidades em um só lugar. Entre com seu acesso da VELLO.</p><div class="auth-flow"><span>Solicitação</span><b>→</b><span>Diagnóstico</span><b>→</b><span>Projeto</span></div></div>
+   <div class="auth-card"><div class="lock-icon" aria-hidden="true">⌑</div><h2>Entrar na área interna</h2><p>Acesse com seu e-mail e sua senha.</p><form id="login-form"><label for="login-email">E-mail</label><input id="login-email" type="email" autocomplete="username" required placeholder="Seu e-mail de acesso"><label for="login-password">Senha</label><input id="login-password" type="password" autocomplete="current-password" required placeholder="Sua senha"><button class="button primary full" type="submit">Entrar <span>→</span></button></form><p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p><p class="auth-foot">Os dados de contato ficam disponíveis apenas para o responsável autorizado.</p></div>
+  </section>
+  <section id="workspace" hidden><div class="page-heading"><div><span class="eyebrow">ÁREA INTERNA / ANÁLISE DE NAVEGAÇÃO</span><h1>Movimentação do site.</h1><p>Entenda o caminho entre a primeira visita e o próximo projeto.</p></div><div class="heading-actions"><label class="sr-only" for="period">Período</label><select id="period" class="period"><option value="1">Hoje</option><option value="7" selected>Últimos 7 dias</option><option value="30">Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select><button id="refresh" class="button">↻ Atualizar</button></div></div><p id="report-feedback" class="feedback" role="status"></p><div id="report-content"></div><p class="method-note">Somente navegação autorizada. Sessões não representam pessoas únicas e não são associadas aos contatos dos leads. O tempo é aproximado, contado enquanto a página está visível. Bloqueadores e falhas de conexão podem reduzir a medição. *Ativas agora: atividade registrada nos últimos 90 segundos. A coleta começa na ativação, sem dados retroativos.</p><p class="updated" id="updated"></p></section>
+ </main>
+ <script type="module" src="analytics.js"></script>
+</body>
+</html>

@@ -706,3 +706,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .custom-list h3 { font-size: 1.4rem; margin-bottom: var(--space-2); }
 .custom-list p { color: var(--ink-2); }
 @media (max-width: 560px) { .custom-list li { grid-template-columns: 48px 1fr; gap: var(--space-4); } .custom-num { font-size: 1.75rem; } }
+
+
+.access-internal{min-height:42px;white-space:nowrap}.privacy-settings{background:none;border:0;color:inherit;text-decoration:underline;font:inherit;padding:0;cursor:pointer}@media(max-width:480px){.access-internal{font-size:12px;padding:9px 13px;min-height:38px}.nav-actions{gap:8px}.brand-name{font-size:20px}}
+.site-header .access-internal{color:inherit;--btn-bd:currentColor;--btn-fill:var(--accent);--btn-fg-hover:#fff}.site-header .access-internal:hover{color:#fff}@media(max-width:960px){.nav{gap:12px}.nav>nav{position:absolute}.nav-actions{margin-left:auto;flex-shrink:0}}@media(max-width:480px){.site-header .brand{gap:8px;font-size:16px}.site-header .brand-name small{font-size:16px}.site-header .brand-mark{width:27px;height:27px}.nav-toggle{width:40px}.access-internal{padding:8px 12px}}@media(max-width:350px){.site-header .brand-name small{display:none}}
