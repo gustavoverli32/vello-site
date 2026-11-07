@@ -1,0 +1,99 @@
+/* Entry screen uses the public Vello palette; dashboard styles remain scoped separately. */
+body:has(#auth:not([hidden])) {
+  background: radial-gradient(ellipse at 76% 90%, #ff5b1f0a, transparent 52%), #0d0e0c;
+  color: #f3f0ea;
+}
+body:has(#auth:not([hidden])) > .app-header { display: none; }
+body:has(#auth:not([hidden])) > main {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  width: 100%;
+  max-width: none;
+  padding: 32px 20px;
+}
+#auth.auth-shell {
+  display: block;
+  min-height: 0;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+}
+#auth .auth-card {
+  background: #161714;
+  border: 1px solid #f3f0ea20;
+  border-radius: 20px;
+  padding: 42px 38px 38px;
+  box-shadow: 0 24px 80px #0005;
+}
+#auth .login-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: fit-content;
+  margin: 0 auto;
+  color: #f3f0ea;
+  text-decoration: none;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+#auth .login-brand svg { flex: none; }
+#auth .login-brand small { color: #b8b2a5; font-size: inherit; font-weight: 400; margin-left: 4px; }
+#auth h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0 32px;
+  color: #b8b2a5;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .15px;
+  line-height: 1.5;
+}
+#auth h1 > span { width: 6px; height: 6px; border-radius: 50%; background: #ff5b1f; }
+#auth form { display: grid; gap: 20px; margin: 0; }
+#auth label { color: #f3f0ea; font-size: 13px; font-weight: 500; margin-bottom: 9px; }
+#auth input {
+  background: #0d0e0c;
+  border: 1px solid #f3f0ea29;
+  border-radius: 10px;
+  color: #f3f0ea;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 13px 15px;
+  height: 52px;
+  caret-color: #ff5b1f;
+}
+#auth input::placeholder { color: #969083; }
+#auth input:focus { border-color: #ff5b1f; }
+#auth :focus-visible { outline: 2px solid #ff5b1f; outline-offset: 3px; }
+#auth input:autofill { box-shadow: 0 0 0 1000px #1f211d inset; -webkit-text-fill-color: #f3f0ea; }
+#auth form .button {
+  margin-top: 6px;
+  min-height: 52px;
+  border: 1px solid #ff5b1f;
+  border-radius: 999px;
+  background: #ff5b1f;
+  color: #0d0e0c;
+  font-size: 15px;
+  font-weight: 750;
+  gap: 12px;
+}
+#auth form .button:hover { background: #ff783f; border-color: #ff783f; }
+#auth form .button:active { background: #f3541b; }
+#auth .feedback { margin: 20px 0 0; color: #b8b2a5; font-size: 13px; }
+#auth .feedback.error { color: #ffb4aa; background: #311c18; border-color: #66342b; }
+@media(max-width:480px) {
+  body:has(#auth:not([hidden])) > main { padding: 24px 18px; }
+  #auth .auth-card { padding: 34px 26px 30px; border-radius: 18px; }
+  #auth .login-brand { font-size: 23px; gap: 10px; }
+  #auth .login-brand svg { width: 36px; height: 36px; }
+}
+@media(max-width:350px) {
+  #auth .auth-card { padding: 30px 20px 26px; }
+  #auth .login-brand { font-size: 21px; gap: 8px; }
+}

@@ -5,14 +5,26 @@
   <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; base-uri 'self'; form-action 'self'">
   <title>Leads privados · VELLO</title><link rel="stylesheet" href="leads.css">
+  <link rel="stylesheet" href="login.css?v=20261107">
 </head>
 <body>
  <a class="skip" href="#main">Pular para o conteúdo</a>
  <header class="app-header"><a class="brand" href="/">V<span>ELLO</span><small>ÁREA INTERNA</small></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a class="active" href="./" aria-current="page">Leads <span class="private-label">Privado</span></a><a href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
  <main id="main">
-  <section id="auth" class="auth-shell">
-   <div class="auth-copy"><span class="eyebrow">COMERCIAL / ACESSO PRIVADO</span><h1>O próximo projeto<br>começa aqui.</h1><p>Solicitações do site, conversas e propostas em um só lugar. Entre para acompanhar cada oportunidade.</p><div class="auth-flow"><span>Solicitação</span><b>→</b><span>Diagnóstico</span><b>→</b><span>Projeto</span></div></div>
-   <div class="auth-card"><div class="lock-icon" aria-hidden="true">⌑</div><h2>Entrar na área de leads</h2><p>Acesse com seu e-mail e sua senha.</p><form id="login-form"><label for="login-email">E-mail</label><input id="login-email" type="email" autocomplete="username" required placeholder="Seu e-mail de acesso"><label for="login-password">Senha</label><input id="login-password" type="password" autocomplete="current-password" required placeholder="Sua senha"><button class="button primary full" type="submit">Entrar <span>→</span></button></form><p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p><p class="auth-foot">Os dados de contato ficam disponíveis apenas para o responsável autorizado.</p></div>
+  <section id="auth" class="auth-shell" aria-labelledby="login-heading">
+   <div class="auth-card">
+    <a class="login-brand" href="/" aria-label="Vello Solutions, voltar ao site">
+     <svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#ff5b1f"/><path d="M9 10l7 12.5L23 10" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+     <span>Vello<small>Solutions</small></span>
+    </a>
+    <h1 id="login-heading"><span aria-hidden="true"></span>Área de acesso privado</h1>
+    <form id="login-form">
+     <div class="login-field"><label for="login-email">E-mail</label><input id="login-email" type="email" autocomplete="username" required placeholder="Seu e-mail" autocapitalize="none" spellcheck="false"></div>
+     <div class="login-field"><label for="login-password">Senha</label><input id="login-password" type="password" autocomplete="current-password" required placeholder="Sua senha"></div>
+     <button class="button primary full" type="submit">Entrar <span aria-hidden="true">→</span></button>
+    </form>
+    <p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p>
+   </div>
   </section>
   <section id="workspace" hidden>
    <div class="page-heading"><div><span class="eyebrow">COMERCIAL / DIAGNÓSTICOS</span><h1>Seu próximo projeto.</h1><p>Do primeiro contato à proposta. Acompanhe cada oportunidade.</p></div><div class="heading-actions"><span class="privacy-chip"><i></i> Área privada</span><button id="refresh" class="button">↻ Atualizar</button></div></div>
