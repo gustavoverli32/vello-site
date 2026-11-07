@@ -1,4 +1,4 @@
-import * as api from './leads-data.js';
+import * as api from './leads-data.js?v=auth-20261107b';
 const $=s=>document.querySelector(s);
 const stages=[['novo','Novo lead','#5b9fff'],['contato','Em contato','#b39bff'],['diagnostico','Diagnóstico agendado','#70d4dc'],['proposta','Proposta','#e8bc73'],['fechado','Fechado','#77d6aa'],['perdido','Perdido','#93a0b0']];
 const stageLabel=key=>stages.find(s=>s[0]===key)?.[1]||key;
@@ -10,7 +10,7 @@ function feedback(id,text,type=''){const el=$(id);el.textContent=text;el.classNa
 function clearPrivate(){leads=[];selectedId=null;busyIds.clear();$('#lead-dialog').close();$('#detail-content').replaceChildren();$('#board').replaceChildren();$('#workspace').hidden=true;$('#logout').hidden=true;$('#auth').hidden=false;$('#login-form').hidden=false;$('#login-password').value='';clearInterval(poll);}
 async function sessionChanged(user,error){
   const version=++sessionVersion;signedIn=!!user;
-  if(!user){clearPrivate();if(error)feedback('#auth-feedback',error,'error');return;}
+  if(!user){clearPrivate();feedback('#auth-feedback',error||'',error?'error':'');return;}
   $('#auth').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#login-password').value='';feedback('#auth-feedback','');
   await load();if(version!==sessionVersion)return;
   clearInterval(poll);poll=setInterval(()=>{if(!document.hidden&&!$('#lead-dialog').open)load(true);},60000);

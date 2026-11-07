@@ -1,4 +1,4 @@
-import * as api from './leads-data.js';
+import * as api from './leads-data.js?v=auth-20261107b';
 const $=s=>document.querySelector(s),esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={'/':'Início','/solucoes.html':'Soluções','/segmentos.html':'Segmentos','/plataforma.html':'Como trabalhamos','/sobre.html':'Sobre','/contato.html':'Contato','/politica-de-privacidade.html':'Privacidade'};
 const number=n=>new Intl.NumberFormat('pt-BR').format(Number(n)||0),duration=s=>s>=60?Math.floor(s/60)+'min '+Math.round(s%60)+'s':Math.round(s)+'s',date=s=>new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short',timeZone:'America/Sao_Paulo'}).format(new Date(s));
