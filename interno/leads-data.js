@@ -5,7 +5,8 @@ let client,sessionListener,authVersion=0,loggingIn=false,ready;
 const CONNECTION_ERROR='A conexão demorou mais que o esperado. Verifique a internet e tente entrar novamente.';
 function bounded(promise,ms=20000){let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(CONNECTION_ERROR)),ms);})]).finally(()=>clearTimeout(timer));}
 async function timedFetch(input,options={}){
-  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+  const isFile=String(input?.url||input).includes('/storage/v1/object/');
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),isFile?90000:12000);
   const signal=options.signal?AbortSignal.any([options.signal,controller.signal]):controller.signal;
   try{return await fetch(input,{...options,signal});}finally{clearTimeout(timer);}
 }
@@ -62,3 +63,25 @@ export async function getHistory(id){const {data,error}=await client.from('vello
 export async function updateLead(id,changes,expectedUpdated){const {data,error}=await client.from('vello_diagnosticos').update(changes).eq('id',id).eq('updated_at',expectedUpdated).select();if(error)throw new Error('Não foi possível salvar. Seus dados continuam no formulário.');if(!data.length)throw new Error('Este lead foi alterado em outra sessão. Atualize a lista antes de salvar.');return data[0];}
 
 export async function siteReport(days){const {data,error}=await client.rpc('vello_site_report',{p_days:days});if(error)throw new Error('Não foi possível carregar as visitas. Tente atualizar novamente.');return data;}
+
+export async function getProjectState(){const {data,error}=await client.from('vello_project_state').select('payload,revision,updated_at').eq('id','main').maybeSingle();if(error)throw new Error('Não foi possível carregar os projetos. Tente novamente.');return data;}
+export async function getProjectSummary(source){const {data,error}=await client.functions.invoke('vello-project-indicators',{body:{source}});if(error)throw new Error('Indicadores temporariamente indisponíveis.');return data;}
+export async function saveProjectState(payload,revision){
+ const query=revision==null?client.from('vello_project_state').insert({id:'main',payload}):client.from('vello_project_state').update({payload}).eq('id','main').eq('revision',revision);
+ const {data,error}=await query.select('payload,revision,updated_at');
+ if(error?.code==='23505'||(!error&&!data?.length))throw new Error('Os projetos foram atualizados em outra aba. Recarregue para conferir a versão mais recente.');
+ if(error)throw new Error('Não foi possível salvar os projetos. Suas alterações continuam nesta tela; tente novamente.');
+ return data[0];
+}
+const projectFilePath=id=>{if(!/^[a-zA-Z0-9_-]{1,120}$/.test(id))throw new Error('Identificador de arquivo inválido.');return 'main/'+id;};
+export async function uploadProjectFile(id,file){
+ if(!(file instanceof Blob)||file.size>52428800)throw new Error('Cada anexo pode ter até 50 MB.');
+ const {error}=await client.storage.from('vello-project-files').upload(projectFilePath(id),file,{upsert:true,contentType:file.type||'application/octet-stream'});
+ if(error)throw new Error('Não foi possível salvar o anexo. Tente novamente.');return true;
+}
+export async function downloadProjectFile(id){
+ const {data,error}=await client.storage.from('vello-project-files').download(projectFilePath(id));
+ if(error)throw new Error('Não foi possível abrir o anexo. Ele pode ainda estar no navegador da central antiga.');
+ const safe=/^(image\/(png|jpeg|gif|webp)|application\/pdf|text\/plain)(;|$)/i.test(data.type);
+ return safe?data:new Blob([data],{type:'application/octet-stream'});
+}

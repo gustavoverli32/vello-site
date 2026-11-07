@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; frame-src 'self'; base-uri 'self'; form-action 'self'">
+  <title>Projetos privados · VELLO</title><link rel="stylesheet" href="leads.css?v=vello-20261107c">
+  <link rel="stylesheet" href="login.css?v=vello-20261107c"><link rel="stylesheet" href="projects.css?v=projects-20261107">
+</head>
+<body data-access="loading">
+ <a class="skip" href="#main">Pular para o conteúdo</a>
+ <header class="app-header"><a class="app-brand" href="/" aria-label="Vello Solutions, voltar ao site"><svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#ff5b1f"/><path d="M9 10l7 12.5L23 10" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Vello<small>Solutions</small></span></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a class="active" aria-current="page" href="projetos.html">Projetos</a><a href="./">Leads <span class="private-label">Privado</span></a><a href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
+ <main id="main">
+  <div id="session-loading" class="session-loading" role="status" aria-live="polite"><span class="session-spinner" aria-hidden="true"></span><p>Carregando área interna…</p></div>
+  <noscript><p>Ative o JavaScript para acessar a área interna.</p></noscript>
+  <section id="auth" class="auth-shell" aria-labelledby="login-heading" hidden>
+   <div class="auth-card">
+    <a class="login-brand" href="/" aria-label="Vello Solutions, voltar ao site">
+     <svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#ff5b1f"/><path d="M9 10l7 12.5L23 10" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+     <span>Vello<small>Solutions</small></span>
+    </a>
+    <h1 id="login-heading"><span aria-hidden="true"></span>Área de acesso privado</h1>
+    <form id="login-form">
+     <div class="login-field"><label for="login-email">E-mail</label><input id="login-email" type="email" autocomplete="username" required placeholder="Seu e-mail" autocapitalize="none" spellcheck="false"></div>
+     <div class="login-field"><label for="login-password">Senha</label><input id="login-password" type="password" autocomplete="current-password" required placeholder="Sua senha"></div>
+     <button class="button primary full" type="submit">Entrar <span aria-hidden="true">→</span></button>
+    </form>
+    <p id="auth-feedback" class="feedback" role="status" aria-live="polite"></p>
+   </div>
+  </section>
+  <section id="workspace" hidden>
+   <div class="project-syncbar"><span id="project-sync-status" role="status">Carregando projetos…</span><div><button id="project-retry" class="button" hidden>Tentar salvar</button><button id="project-reload" class="button">↻ Atualizar</button><button id="project-transfer" class="button">Trazer da central antiga</button></div></div>
+   <p id="project-feedback" class="feedback" role="status"></p>
+   <section id="project-setup" class="project-setup" hidden><span class="eyebrow">PROJETOS / ÁREA PRIVADA</span><h1>Seu acompanhamento, no mesmo lugar.</h1><p>Traga os projetos da central Vello para manter o fluxo de atendimento, os detalhes e os anexos neste acesso privado.</p><p>A transferência usa os dados salvos neste navegador. A cópia da central antiga é preservada.</p><button id="setup-transfer" class="button primary">Transferir meus projetos →</button><button id="setup-catalog" class="button subtle">Começar com o catálogo inicial</button></section>
+   <iframe id="project-frame" title="Fluxo de projetos Vello" hidden></iframe>
+  </section>
+ </main>
+ <script type="module" src="projects.js?v=projects-20261107"></script>
+</body>
+</html>
