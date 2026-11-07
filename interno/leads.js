@@ -1,17 +1,18 @@
+import {setAccessView} from './access-view.js?v=vello-20261107c';
 import * as api from './leads-data.js?v=auth-20261107b';
 const $=s=>document.querySelector(s);
-const stages=[['novo','Novo lead','#5b9fff'],['contato','Em contato','#b39bff'],['diagnostico','Diagnóstico agendado','#70d4dc'],['proposta','Proposta','#e8bc73'],['fechado','Fechado','#77d6aa'],['perdido','Perdido','#93a0b0']];
+const stages=[['novo','Novo lead','#ff5b1f'],['contato','Em contato','#d2bd8f'],['diagnostico','Diagnóstico agendado','#b7c79c'],['proposta','Proposta','#e8bc73'],['fechado','Fechado','#77d6aa'],['perdido','Perdido','#a7a092']];
 const stageLabel=key=>stages.find(s=>s[0]===key)?.[1]||key;
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=value=>value?new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'short',timeZone:'America/Sao_Paulo'}).format(new Date(value)):'Não informado';
 const day=value=>new Intl.DateTimeFormat('pt-BR',{day:'2-digit',month:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date(value));
 let leads=[],signedIn=false,loading=false,selectedId=null,dragId=null,dragEndedAt=0,sessionVersion=0,busyIds=new Set(),poll;
 function feedback(id,text,type=''){const el=$(id);el.textContent=text;el.className='feedback'+(type?' '+type:'');}
-function clearPrivate(){leads=[];selectedId=null;busyIds.clear();$('#lead-dialog').close();$('#detail-content').replaceChildren();$('#board').replaceChildren();$('#workspace').hidden=true;$('#logout').hidden=true;$('#auth').hidden=false;$('#login-form').hidden=false;$('#login-password').value='';clearInterval(poll);}
+function clearPrivate(){setAccessView(false);leads=[];selectedId=null;busyIds.clear();$('#lead-dialog').close();$('#detail-content').replaceChildren();$('#board').replaceChildren();$('#workspace').hidden=true;$('#logout').hidden=true;$('#auth').hidden=false;$('#login-form').hidden=false;$('#login-password').value='';clearInterval(poll);}
 async function sessionChanged(user,error){
   const version=++sessionVersion;signedIn=!!user;
   if(!user){clearPrivate();feedback('#auth-feedback',error||'',error?'error':'');return;}
-  $('#auth').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#login-password').value='';feedback('#auth-feedback','');
+  setAccessView(true);$('#login-password').value='';feedback('#auth-feedback','');
   await load();if(version!==sessionVersion)return;
   clearInterval(poll);poll=setInterval(()=>{if(!document.hidden&&!$('#lead-dialog').open)load(true);},60000);
   const linked=new URLSearchParams(location.search).get('lead');if(linked&&leads.some(l=>l.id===linked))openDetail(linked);
@@ -69,4 +70,4 @@ $('#close-detail').addEventListener('click',()=>$('#lead-dialog').close());$('#l
 $('#search').addEventListener('input',render);$('#status-filter').addEventListener('change',render);$('#refresh').addEventListener('click',()=>load());
 $('#logout').addEventListener('click',async()=>{signedIn=false;++sessionVersion;clearPrivate();await api.logout();});
 $('#login-form').addEventListener('submit',async e=>{e.preventDefault();const b=e.target.querySelector('button');b.disabled=true;feedback('#auth-feedback','Entrando…');try{await api.login($('#login-email').value.trim().toLowerCase(),$('#login-password').value);}catch(err){feedback('#auth-feedback',err.message,'error');}finally{b.disabled=false;}});
-api.init(sessionChanged).catch(()=>feedback('#auth-feedback','Não foi possível carregar o acesso. Verifique a conexão e atualize a página.','error'));
+api.init(sessionChanged).catch(()=>sessionChanged(null,'Não foi possível carregar o acesso. Verifique a conexão e atualize a página.'));

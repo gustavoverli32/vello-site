@@ -4,14 +4,16 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; base-uri 'self'; form-action 'self'">
-  <title>Movimentação do site · VELLO</title><link rel="stylesheet" href="leads.css"><link rel="stylesheet" href="analytics.css">
-  <link rel="stylesheet" href="login.css?v=20261107">
+  <title>Movimentação do site · VELLO</title><link rel="stylesheet" href="leads.css?v=vello-20261107c"><link rel="stylesheet" href="analytics.css?v=vello-20261107c">
+  <link rel="stylesheet" href="login.css?v=vello-20261107c">
 </head>
-<body>
+<body data-access="loading">
  <a class="skip" href="#main">Pular para o conteúdo</a>
- <header class="app-header"><a class="brand" href="/">V<span>ELLO</span><small>ÁREA INTERNA</small></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a href="./">Leads <span class="private-label">Privado</span></a><a class="active" aria-current="page" href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
+ <header class="app-header"><a class="app-brand" href="/" aria-label="Vello Solutions, voltar ao site"><svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#ff5b1f"/><path d="M9 10l7 12.5L23 10" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Vello<small>Solutions</small></span></a><nav aria-label="Navegação principal"><a href="/">Voltar ao site</a><a href="./">Leads <span class="private-label">Privado</span></a><a class="active" aria-current="page" href="movimentacao.html">Movimentação do site</a></nav><button id="logout" class="button subtle" hidden>Sair</button></header>
  <main id="main">
-  <section id="auth" class="auth-shell" aria-labelledby="login-heading">
+  <div id="session-loading" class="session-loading" role="status" aria-live="polite"><span class="session-spinner" aria-hidden="true"></span><p>Carregando área interna…</p></div>
+  <noscript><p>Ative o JavaScript para acessar a área interna.</p></noscript>
+  <section id="auth" class="auth-shell" aria-labelledby="login-heading" hidden>
    <div class="auth-card">
     <a class="login-brand" href="/" aria-label="Vello Solutions, voltar ao site">
      <svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#ff5b1f"/><path d="M9 10l7 12.5L23 10" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -28,6 +30,6 @@
   </section>
   <section id="workspace" hidden><div class="page-heading"><div><span class="eyebrow">ÁREA INTERNA / ANÁLISE DE NAVEGAÇÃO</span><h1>Movimentação do site.</h1><p>Entenda o caminho entre a primeira visita e o próximo projeto.</p></div><div class="heading-actions"><label class="sr-only" for="period">Período</label><select id="period" class="period"><option value="1">Hoje</option><option value="7" selected>Últimos 7 dias</option><option value="30">Últimos 30 dias</option><option value="90">Últimos 90 dias</option></select><button id="refresh" class="button">↻ Atualizar</button></div></div><p id="report-feedback" class="feedback" role="status"></p><div id="report-content"></div><p class="method-note">Somente navegação autorizada. Sessões não representam pessoas únicas e não são associadas aos contatos dos leads. O tempo é aproximado, contado enquanto a página está visível. Bloqueadores e falhas de conexão podem reduzir a medição. *Ativas agora: atividade registrada nos últimos 90 segundos. A coleta começa na ativação, sem dados retroativos.</p><p class="updated" id="updated"></p></section>
  </main>
- <script type="module" src="analytics.js?v=auth-20261107b"></script>
+ <script type="module" src="analytics.js?v=vello-20261107c"></script>
 </body>
 </html>
