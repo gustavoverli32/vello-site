@@ -8,7 +8,7 @@ function feedback(text,error=false){$('#project-feedback').textContent=text;$('#
 function sync(text,kind=''){const el=$('#project-sync-status');el.textContent=text;el.dataset.state=kind;$('#project-retry').hidden=kind!=='error'||!pending;}
 async function session(user,error){
  const previous=signed;signed=!!user;setAccessView(signed);$('#login-password').value='';$('#auth-feedback').textContent=error||'';
- if(!signed){++generation;port?.close();port=null;frame.removeAttribute('src');frame.hidden=true;state=null;pending=null;loading=false;saving=false;transfer?.popup?.close();transfer=null;return;}
+ if(!signed){++generation;port?.close();port=null;frame.removeAttribute('src');frame.hidden=true;state=null;pending=null;loading=false;saving=false;$('#transfer-dialog').close();$('#transfer-frame').removeAttribute('src');transfer=null;return;}
  if(!previous)await load();
 }
 async function load(){
@@ -47,16 +47,18 @@ window.addEventListener('message',event=>{
  if(event.origin!==SOURCE||!transfer||event.source!==transfer.popup||event.data?.nonce!==transfer.nonce||!signed)return;
  const msg=event.data;
  if(msg.type==='vello-transfer-ready')transfer.popup.postMessage({type:'vello-transfer-connect',nonce:transfer.nonce},SOURCE);
- if(msg.type==='vello-transfer-summary')feedback(msg.count?`A central encontrou ${msg.count} projeto(s). Confirme a transferência na janela aberta.`:'Nenhum projeto salvo foi encontrado neste navegador. Use o navegador da central antiga ou comece com o catálogo inicial.');
+ if(msg.type==='vello-transfer-summary')feedback(msg.count?`A central encontrou ${msg.count} projeto(s). Confira a transferência na tela aberta.`:'Nenhum projeto salvo foi encontrado neste navegador. Use o navegador da central antiga ou comece com o catálogo inicial.');
  if(msg.type==='vello-transfer-file-result'){const request=transfers.get(msg.requestId);if(request){transfers.delete(msg.requestId);clearTimeout(request.timer);msg.error?request.reject(new Error(msg.error)):request.resolve(msg.file);}}
  if(msg.type==='vello-transfer-data'&&!transfer.busy)importProjects(msg.payload);
 });
 function openTransfer(){
  if(!signed||loading||saving||pending){feedback('Aguarde o carregamento e salve as alterações antes da transferência.',true);return;}
- const nonce=crypto.randomUUID(),popup=window.open(SOURCE+'/Vello/transferir-projetos.html#transfer='+nonce,'vello-project-transfer','popup,width=670,height=780');
- if(!popup){feedback('Permita a janela de transferência neste navegador e tente novamente.',true);return;}
- transfer={nonce,popup,busy:false};feedback('Confira os projetos e confirme a transferência na janela da central antiga.');
+ const nonce=crypto.randomUUID(),transferFrame=$('#transfer-frame');$('#transfer-dialog').showModal();
+ transfer={nonce,popup:transferFrame.contentWindow,busy:false};transferFrame.src=SOURCE+'/Vello/transferir-projetos.html?v=inline-20261107#transfer='+nonce;feedback('Confira os projetos e confirme a transferência na tela da central antiga.');
 }
+function closeTransfer(){if(transfer?.busy)return;$('#transfer-dialog').close();$('#transfer-frame').removeAttribute('src');transfer=null;}
+$('#transfer-close').addEventListener('click',closeTransfer);
+$('#transfer-dialog').addEventListener('cancel',e=>{e.preventDefault();closeTransfer();});
 function legacyFile(id,source){return new Promise((resolve,reject)=>{const requestId=crypto.randomUUID(),timer=setTimeout(()=>{transfers.delete(requestId);reject(new Error('A central antiga não respondeu ao pedido do anexo.'));},20000);transfers.set(requestId,{resolve,reject,timer});source.popup.postMessage({type:'vello-transfer-file',nonce:source.nonce,requestId,id},SOURCE);});}
 async function importProjects(raw){
  const source=transfer,current=generation;source.busy=true;frame.inert=true;$('#project-transfer').disabled=true;$('#project-reload').disabled=true;$('#setup-catalog').disabled=true;

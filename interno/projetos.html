@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; frame-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self'; connect-src 'self' https://qjdvrqlcblkynheitkuk.supabase.co https://esm.sh; img-src 'self' data:; frame-src 'self' https://gustavoverli32.github.io; base-uri 'self'; form-action 'self'">
   <title>Projetos privados · VELLO</title><link rel="stylesheet" href="leads.css?v=vello-20261107c">
-  <link rel="stylesheet" href="login.css?v=vello-20261107c"><link rel="stylesheet" href="projects.css?v=projects-20261107">
+  <link rel="stylesheet" href="login.css?v=vello-20261107c"><link rel="stylesheet" href="projects.css?v=projects-20261107b">
 </head>
 <body data-access="loading">
  <a class="skip" href="#main">Pular para o conteúdo</a>
@@ -34,7 +34,7 @@
    <section id="project-setup" class="project-setup" hidden><span class="eyebrow">PROJETOS / ÁREA PRIVADA</span><h1>Seu acompanhamento, no mesmo lugar.</h1><p>Traga os projetos da central Vello para manter o fluxo de atendimento, os detalhes e os anexos neste acesso privado.</p><p>A transferência usa os dados salvos neste navegador. A cópia da central antiga é preservada.</p><button id="setup-transfer" class="button primary">Transferir meus projetos →</button><button id="setup-catalog" class="button subtle">Começar com o catálogo inicial</button></section>
    <iframe id="project-frame" title="Fluxo de projetos Vello" hidden></iframe>
   </section>
- </main>
- <script type="module" src="projects.js?v=projects-20261107"></script>
+ </main><dialog id="transfer-dialog" class="transfer-dialog" aria-label="Transferir projetos da central antiga"><button id="transfer-close" class="button">Fechar</button><iframe id="transfer-frame" title="Revisar transferência dos projetos"></iframe></dialog>
+ <script type="module" src="projects.js?v=projects-20261107b"></script>
 </body>
 </html>
